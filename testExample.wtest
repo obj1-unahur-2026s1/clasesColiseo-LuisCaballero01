@@ -1,9 +1,9 @@
-import example.*
+import todo.*
 
 describe "group of tests for pepita" {
 
   test "pepita has initial energy" {
-    assert.equals(100, 100)
+    assert.equals("D-12", "D-"+12)
   }
 
 }

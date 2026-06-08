@@ -22,6 +22,7 @@ class Gladiador{
     var vida = 100
 
     method defensa()
+    method vida() = vida
 
     method atacarA(unGladiador){
         unGladiador.recibirAtaqueDe(self)
@@ -34,12 +35,15 @@ class Gladiador{
         self.atacarA(unGladiador)
         unGladiador.atacarA(self)
     }
+    method curar(){
+        vida = 100
+    }
 }
 
 class Mirmillon inherits Gladiador{
     var arma
     var armadura
-    var fuerza
+    const fuerza
 
     method poderDeAtaque() = fuerza + arma.dañoAtaque()
     method destreza() = 15
@@ -51,6 +55,10 @@ class Mirmillon inherits Gladiador{
     }
     method cambiarArma(unArma){
         arma = unArma
+    }
+
+    method armarGrupoCon(unGladiador){
+        return new Grupo(nombreGrupo="Mirmillolandia", miembros=#{self, unGladiador})
     }
 
 }
@@ -71,5 +79,47 @@ class Dimachaerus inherits Gladiador{
     override method atacarA(unGladiador){
         super(unGladiador)
         destreza += 1
+    }
+
+    method armarGrupoCon(unGladiador){
+        return new Grupo(nombreGrupo="D-"+(self.poderDeAtaque()+unGladiador.poderDeAtaque()).toString(), miembros=#{self, unGladiador})
+    }
+
+}
+
+class Grupo{
+    const miembros = #{}
+    var cantPeleas = 0
+    const property nombreGrupo
+
+    method agregarMiembro(unGladiador){
+        miembros.add(unGladiador)
+    }
+    method quitarMiembro(unGladiador){
+        miembros.remove(unGladiador)
+    }
+
+    method puedenCombatir() = miembros.filter({m => m.vida() > 0})
+    method campoeon() = self.puedenCombatir().max({m => m.poderDeAtaque()})
+
+    method combatirCon(unGrupo){
+        3.times({i => self.campoeon().pelearCon(unGrupo.campoeon())
+        cantPeleas += 1})
+    }
+}
+
+object coliseo{
+    method organizarCombate(unGrupo, otroGrupo){
+        unGrupo.combatirCon(otroGrupo)
+    }
+    method organizarCombateDesbalanceado(unGrupo, unGladiador){
+        unGrupo.forEach({g => g.pelearCon(unGladiador)})
+    }
+
+    method curarGladiador(unGladiador){
+        unGladiador.curar()
+    }
+    method curarGrupo(unGrupo){
+        unGrupo.forEach({g => g.curar()})
     }
 }
