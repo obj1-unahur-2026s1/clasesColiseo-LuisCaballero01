@@ -1,4 +1,6 @@
-import todo.*
+import gladiadores.*
+import armas_armaduras.*
+import coliseo.*
 
 describe "group of tests for pepita" {
 

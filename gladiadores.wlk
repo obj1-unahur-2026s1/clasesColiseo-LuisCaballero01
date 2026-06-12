@@ -1,23 +1,3 @@
-class ArmaFilo{
-    const filo
-    const longitud
-    
-    method dañoAtaque() = filo * longitud
-}
-
-class ArmaContundente{
-    const peso
-
-    method dañoAtaque() = peso
-}
-
-object casco{
-    method proteccionPara(unGladiador) = 10
-}
-object escudo{
-    method proteccionPara(unGladiador) = 5 + unGladiador.destreza()*0.1
-}
-
 class Gladiador{
     var vida = 100
 
@@ -43,13 +23,16 @@ class Gladiador{
 class Mirmillon inherits Gladiador{
     var arma
     var armadura
-    const fuerza
+    var fuerza
 
     method poderDeAtaque() = fuerza + arma.dañoAtaque()
     method destreza() = 15
     method fuerza() = fuerza
     override method defensa() = armadura.proteccionPara(self) + self.destreza()
 
+    method cambiarFuerza(unaCant){
+        fuerza = unaCant
+    }
     method cambiarArmadura(unaArmadura){
         armadura = unaArmadura
     }
@@ -74,6 +57,9 @@ class Dimachaerus inherits Gladiador{
 
     method agregarArma(unArma){
         armas.add(unArma)
+    }
+    method quitarArma(unArma){
+        armas.remove(unArma)
     }
  
     override method atacarA(unGladiador){
@@ -105,21 +91,5 @@ class Grupo{
     method combatirCon(unGrupo){
         3.times({i => self.campoeon().pelearCon(unGrupo.campoeon())
         cantPeleas += 1})
-    }
-}
-
-object coliseo{
-    method organizarCombate(unGrupo, otroGrupo){
-        unGrupo.combatirCon(otroGrupo)
-    }
-    method organizarCombateDesbalanceado(unGrupo, unGladiador){
-        unGrupo.forEach({g => g.pelearCon(unGladiador)})
-    }
-
-    method curarGladiador(unGladiador){
-        unGladiador.curar()
-    }
-    method curarGrupo(unGrupo){
-        unGrupo.forEach({g => g.curar()})
     }
 }
