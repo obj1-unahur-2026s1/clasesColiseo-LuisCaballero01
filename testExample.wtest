@@ -3,7 +3,6 @@ import armas_armaduras.*
 import coliseo.*
 
 describe "group of tests for pepita" {
-
   test "pepita has initial energy" {
     assert.equals("D-12", "D-"+12)
   }

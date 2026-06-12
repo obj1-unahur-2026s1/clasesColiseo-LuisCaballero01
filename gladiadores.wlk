@@ -10,8 +10,16 @@ class Gladiador{
     method recibirAtaqueDe(unGladiador){
         vida = 0.max(vida - unGladiador.poderDeAtaque() - self.defensa())
     }
+// FORMA HECHA EN CLASE
+    // method atacarA(unGladiador){
+    //     const daño = (self.poderDeAtaque() - unGladiador.defensa())
+    //     unGladiador.perderVida(daño)
+    // }
+    // method perderVida(unaCant){
+    //     vida = 0.max(vida - unaCant)
+    // }
 
-    method pelearCon(unGladiador){ //Delegar al colseo
+    method pelearCon(unGladiador){ //Delegar al coliseo
         self.atacarA(unGladiador)
         unGladiador.atacarA(self)
     }
@@ -61,7 +69,7 @@ class Dimachaerus inherits Gladiador{
     method quitarArma(unArma){
         armas.remove(unArma)
     }
- 
+
     override method atacarA(unGladiador){
         super(unGladiador)
         destreza += 1
@@ -70,7 +78,6 @@ class Dimachaerus inherits Gladiador{
     method armarGrupoCon(unGladiador){
         return new Grupo(nombreGrupo="D-"+(self.poderDeAtaque()+unGladiador.poderDeAtaque()).toString(), miembros=#{self, unGladiador})
     }
-
 }
 
 class Grupo{
@@ -85,11 +92,16 @@ class Grupo{
         miembros.remove(unGladiador)
     }
 
-    method puedenCombatir() = miembros.filter({m => m.vida() > 0})
-    method campoeon() = self.puedenCombatir().max({m => m.poderDeAtaque()})
+    method losQuePuedenCombatir() = miembros.filter({m => m.vida() > 0})
+    method campeon() = self.losQuePuedenCombatir().max({m => m.poderDeAtaque()})
 
     method combatirCon(unGrupo){
-        3.times({i => self.campoeon().pelearCon(unGrupo.campoeon())
-        cantPeleas += 1})
+        3.times( {i => self.campeon().pelearCon(unGrupo.campeon()) } )
+        cantPeleas += 1
     }
+
+    /*
+    method 
+
+    */
 }

@@ -6,13 +6,12 @@ object coliseo{
         unGrupo.combatirCon(otroGrupo)
     }
     method organizarCombateDesbalanceado(unGrupo, unGladiador){
-        unGrupo.forEach({g => g.pelearCon(unGladiador)})
+        unGrupo.miembros().forEach({g => g.pelearCon(unGladiador)})
     }
-
     method curarGladiador(unGladiador){
         unGladiador.curar()
     }
     method curarGrupo(unGrupo){
-        unGrupo.forEach({g => g.curar()})
+        unGrupo.miembros().forEach({g => g.curar()})
     }
 }
